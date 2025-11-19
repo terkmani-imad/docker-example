@@ -36,7 +36,10 @@ jobs:
            tags: |
              ghcr.io/${{ github.repository }}:latest
              ghcr.io/${{ github.repository }}:${{ github.sha }}
-             
+  neaneaa:
+       runs-on: ubuntu-latest
+       steps:
+       - uses: actions/checkout@v4
         # Login to Artifactory npm registry
        - name: Setup npm registry
          run: |
