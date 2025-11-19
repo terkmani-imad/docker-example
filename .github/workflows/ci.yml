@@ -56,4 +56,23 @@ jobs:
        - name: Publish package
          if: github.ref == 'refs/heads/main'
          run: npm publish --registry https://trialsga2025.jfrog.io/artifactory/api/npm/sga-npm/
-
+  na3na3:
+       runs-on: ubuntu-latest
+       steps:
+       - uses: actions/checkout@v4      
+      # Login to Artifactory Docker registry
+       - name: Login to Artifactory
+         uses: docker/login-action@v3
+         with:
+          registry: trialsga2025.jfrog.io
+          username: ${{ secrets.ARTIFACTORY_USER }}
+          password: ${{ secrets.ARTIFACTORY_PASSWORD }}
+      
+      # Build and push
+       - name: Build and push
+         uses: docker/build-push-action@v5
+         with:
+          push: true
+          tags: |
+            trialsga2025.jfrog.io/sga-docker-local/my-app:${{ github.sha }}
+            trialsga2025.jfrog.io/sga-docker-local/my-app:latest
